@@ -16,8 +16,9 @@ from allure_commons.types import AttachmentType
 def driver():
     options = Options()
     options.add_argument('--headless')
+    options.add_argument("window-size=1920,1080")
     chrome_driver = webdriver.Chrome(options=options)
-    sleep(3)
+    # sleep(3)
     chrome_driver.implicitly_wait(5)
     yield chrome_driver
     # filename = f'{str(random.randint(100, 10000))}.png'
