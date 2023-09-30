@@ -9,6 +9,7 @@ from pages.product_page import ProductPage
 from time import sleep
 import random
 import allure
+from allure_commons.types import AttachmentType
 
 
 @pytest.fixture()
@@ -21,7 +22,7 @@ def driver():
     yield chrome_driver
     filename = f'{str(random.randint(100, 10000))}.png'
     chrome_driver.save_screenshot(filename)
-    allure.attach(filename)
+    allure.attach(filename, name="Screenshot", attachment_type=AttachmentType.PNG)
 
 
 @pytest.fixture()
