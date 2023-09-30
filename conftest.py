@@ -7,6 +7,7 @@ from pages.home_page import HomePage
 from pages.category_page import CategoryPage
 from pages.product_page import ProductPage
 from time import sleep
+import random
 
 
 @pytest.fixture()
@@ -16,7 +17,8 @@ def driver():
     chrome_driver = webdriver.Chrome(options=options)
     sleep(3)
     chrome_driver.implicitly_wait(5)
-    return chrome_driver
+    yield chrome_driver
+    chrome_driver.save_screenshot(f'{str(random.randint(100, 10000))}.png')
 
 
 @pytest.fixture()
