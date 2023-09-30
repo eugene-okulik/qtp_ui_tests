@@ -8,6 +8,7 @@ from pages.category_page import CategoryPage
 from pages.product_page import ProductPage
 from time import sleep
 import random
+import allure
 
 
 @pytest.fixture()
@@ -18,7 +19,9 @@ def driver():
     sleep(3)
     chrome_driver.implicitly_wait(5)
     yield chrome_driver
-    chrome_driver.save_screenshot(f'{str(random.randint(100, 10000))}.png')
+    filename = f'{str(random.randint(100, 10000))}.png'
+    chrome_driver.save_screenshot(filename)
+    allure.attach(filename)
 
 
 @pytest.fixture()
