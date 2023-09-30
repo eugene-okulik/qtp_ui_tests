@@ -1,4 +1,5 @@
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 import pytest
 from pages.login_page import LoginPage
 from pages.sale_page import SalePage
@@ -10,7 +11,9 @@ from time import sleep
 
 @pytest.fixture()
 def driver():
-    chrome_driver = webdriver.Chrome()
+    options = Options()
+    options.add_argument('--headless')
+    chrome_driver = webdriver.Chrome(options=options)
     sleep(3)
     chrome_driver.implicitly_wait(5)
     return chrome_driver
