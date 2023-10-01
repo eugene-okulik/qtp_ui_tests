@@ -1,5 +1,7 @@
 from pages.base_page import BasePage
 from pages.locators import product_page_loc as loc
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 
 class ProductPage(BasePage):
@@ -16,4 +18,6 @@ class ProductPage(BasePage):
             raise NotImplementedError('Product URL should be passed to object be able to open the page by URL')
 
     def add_to_cart_button_is_enabled(self):
-        return self.find(loc.add_to_cart_button).is_enabled()
+        button = self.find(loc.add_to_cart_button).is_enabled()
+        # WebDriverWait(self.driver, 5).until(EC.element_to_be_clickable(button))
+        return button.is_enabled()
