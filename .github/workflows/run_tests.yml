@@ -28,6 +28,13 @@ jobs:
         run: pip install -r requirements.txt
       - name: chrome version
         run: google-chrome --version
-      - name: Run tests
-        run: pytest -v
+      - name: Run smoke tests
+        if: "github.event.inputs.deployment_target == 'smoke'"
+        run: pytest -v -m smoke
+      - name: Run regression tests
+        if: "github.event.inputs.deployment_target == 'regression'"
+        run: pytest -v -m regression
+      - name: Run extended tests
+        if: "github.event.inputs.deployment_target == 'extended'"
+        run: pytest -v -m extended
       
