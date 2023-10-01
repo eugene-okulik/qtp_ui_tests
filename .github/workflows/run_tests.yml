@@ -30,11 +30,26 @@ jobs:
         run: google-chrome --version
       - name: Run smoke tests
         if: "github.event.inputs.deployment_target == 'smoke'"
-        run: pytest -v -m smoke
+        run: pytest -v -m smoke --alluredir=allure-results
       - name: Run regression tests
         if: "github.event.inputs.deployment_target == 'regression'"
-        run: pytest -v -m regression
+        run: pytest -v -m regression --alluredir=allure-results
       - name: Run extended tests
         if: "github.event.inputs.deployment_target == 'extended'"
-        run: pytest -v -m extended
+        run: pytest -v -m extended --alluredir=allure-results
+      - name: Install Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'microsoft'
+          java-version: '17'
+      - name: Install Allure
+        run: wget https://github.com/allure-framework/allure2/releases/download/2.24.0/allure-2.24.0.tgz && tar -zxvf allure-2.24.0.tgz -C /opt/ && ln -s /opt/allure-2.24.0/bin/allure /usr/bin/allure
+      - name: Generate report
+        run: allure generate -c allure-results -o allure-report
+      - name: Save Allure report
+        uses: actions/upload-artifact@v3
+        with:
+          name: allure-report
+          path: allure-report
+          retention-days: 1
       
